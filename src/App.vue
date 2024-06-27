@@ -1,19 +1,23 @@
 <template>
   <div id="app">
     <Navbar />
-    <HeroSection />
+    <HomeSection />
+    <!-- <DataDisplay />
+    <router-view /> -->
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue';
-import HeroSection from './components/HeroSection.vue';
+import HomeSection from './components/HomeSection.vue';
+// import DataDisplay from './components/DataDisplay.vue';
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    HeroSection
+    HomeSection,
+    // DataDisplay
   }
 };
 </script>
@@ -23,7 +27,7 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Arial', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 #app {
   height: 100%;

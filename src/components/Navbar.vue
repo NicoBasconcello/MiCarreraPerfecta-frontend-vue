@@ -1,7 +1,8 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <nav class="navbar">
       <div class="navbar-brand">
-        <span>Mi Carrera Perfecta</span>
+        <img src="@/assets/img/icon.png" alt="Mi Carrera Perfecta" class="navbar-logo">
       </div>
       <div class="navbar-burger" @click="toggleMenu">
         <div></div>
@@ -37,13 +38,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #333;
+    padding: 0px 20px;
+    background-color: #1b1343;
     color: white;
   }
-  .navbar-brand span {
-    font-size: 24px;
-    font-weight: bold;
+  .navbar-brand .navbar-logo {
+  width: 200px;
+  height: 200px;
   }
   .navbar-burger {
     display: none;
@@ -75,7 +76,7 @@
       display: none;
       flex-direction: column;
       width: 100%;
-      background-color: #333;
+      background-color: #1b1343;
     }
     .navbar-menu a {
       padding: 10px 20px;
