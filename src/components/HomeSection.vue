@@ -3,7 +3,7 @@
       <div class="overlay"></div>
       <div class="home-content">
         <h1>MI CARRERA PERFECTA</h1>
-        <button @click="navigateToPreferences">Encuentra la tuya</button>
+        <button @click="navigateToPreferences">Realizar Test</button>
       </div>
     </section>
   </template>
@@ -12,7 +12,7 @@
   export default {
     methods: {
       navigateToPreferences() {
-        this.$router.push('/university');
+        this.$router.push('/questions');
       }
     }
   };
