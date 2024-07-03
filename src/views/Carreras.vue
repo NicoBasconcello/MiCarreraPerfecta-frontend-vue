@@ -57,10 +57,9 @@
   </div>
 </template>
 
-  
 <script>
 import { ref, onMounted } from 'vue';
-import api from '../api.js';
+import { getCarreras } from '../api.js';
 
 export default {
   setup() {
@@ -96,15 +95,14 @@ export default {
       filteredCarreras.value = carreras.value;
     };
 
-    onMounted(() => {
-      api.get('/career')
-        .then(response => {
-          carreras.value = response.data.objectResponse;
-          filteredCarreras.value = response.data.objectResponse;
-        })
-        .catch(error => {
-          console.error('Error al obtener las carreras:', error);
-        });
+    onMounted(async () => {
+      try {
+        const carrerasResponse = await getCarreras();
+        carreras.value = carrerasResponse;
+        filteredCarreras.value = carrerasResponse;
+      } catch (error) {
+        console.error('Error al obtener las carreras:', error);
+      }
     });
 
     return { filters, filteredCarreras, applyFilter, clearFilter };
@@ -112,7 +110,6 @@ export default {
 };
 </script>
 
-  
 <style scoped>
 .carreras {
   padding: 20px;
@@ -131,7 +128,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
-.text-center{
+.text-center {
   text-align: center;
 }
 .card {
@@ -150,5 +147,3 @@ export default {
   margin: 5px 0;
 }
 </style>
-
-  
