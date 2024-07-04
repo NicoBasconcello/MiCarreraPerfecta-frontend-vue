@@ -1,95 +1,65 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div class="dropdown">
-      <div class="container_branch">
-        <button class="btn_branch" @click="handleToggle">
-          <span class="btn_title">{{ branch.name }}</span>
-          <span class="btn_icon">{{ isDropdown ? '▲' : '▼' }}</span>
-        </button>
-      </div>
-      <!-- careerList se recibe por parámetro y se muestra como opciones -->
-      <ul v-if="isDropdown && careerList.length > 0" class="options">
-        <li
-          v-for="career in careerList"
-          :key="career.id"
-          class="option"
-          @click="selectOptionCareer(career)"
-        >
-          {{ career.name }}
-        </li>
-      </ul>
-    </div>
-  </template>
-  
-  <script>
-  import { ref } from 'vue';
-  
-  export default {
-    props: {
-      branch: Object,
-      careerList: Array,
-    },
-    setup(props, { emit }) {
-      const isDropdown = ref(false);
-  
-      const handleToggle = () => {
-        isDropdown.value = !isDropdown.value;
-        emit('selectedBranch', props.branch.id_branch); // Emitir evento para seleccionar rama
-      };
-  
-      const selectOptionCareer = (career) => {
-        emit('selectedCareer', career); // Emitir evento para seleccionar carrera
-        isDropdown.value = false;
-      };
-  
-      return {
-        isDropdown,
-        handleToggle,
-        selectOptionCareer,
-      };
-    },
-  };
-  </script>
-  
-  <style scoped>
-  .dropdown {
-    margin-bottom: 10px;
+  <div class="dropdown">
+    <h2>{{ branch.name }}</h2>
+    <select @change="handleSelect($event)">
+      <option v-for="career in careerList" :key="career.id_career" :value="career.id_career">
+        {{ career.name }}
+      </option>
+    </select>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    branch: Object,
+    careerList: Array
+  },
+  methods: {
+    handleSelect(event) {
+      const selectedCareer = this.careerList.find(career => career.id_career === Number(event.target.value));
+      this.$emit('selectedCareer', selectedCareer);
+    }
   }
-  
-  .container_branch {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .btn_branch {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 10px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .btn_icon {
-    margin-left: 5px;
-  }
-  
-  .options {
-    list-style-type: none;
-    padding: 0;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-  }
-  
-  .option {
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .option:hover {
-    background-color: #f0f0f0;
-  }
-  </style>
-  
+};
+</script>
+
+<style scoped>
+.dropdown {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 15px;
+}
+
+.dropdown select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: black;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.dropdown select:focus {
+  border-color: #2980b9;
+  box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
+  outline: none;
+}
+
+.dropdown option {
+  padding: 10px;
+}
+</style>
+
