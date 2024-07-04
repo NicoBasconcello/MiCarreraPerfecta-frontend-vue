@@ -1,3 +1,4 @@
+// generals.js
 import axios from 'axios';
 
 const api = axios.create({
@@ -70,7 +71,7 @@ export function getCareersByBranches(id_branch) {
   return api.post('/questionnaire/branch/career', id_branch)
     .then(response => response.data.objectResponse)
     .catch(error => {
-      console.error(error);
+      console.error('Error al obtener las carreras:', error);
       throw error;
     });
 }

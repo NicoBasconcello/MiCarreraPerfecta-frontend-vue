@@ -1,6 +1,6 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="carreras">
+    <h1 class="career-title">Buscador de Carreras</h1>
     <h2>Filtrar</h2>
     <div class="filters">
       <!-- Filtros para los diferentes campos -->
@@ -37,10 +37,12 @@
           <option value="3">Mixto</option>
         </select>
       </label>
-      <button @click="applyFilter">Filtrar</button>
-      <button @click="clearFilter">Limpiar Filtro</button>
+      <div class="button-group">
+        <button @click="applyFilter" class="btn-filter">Filtrar</button>
+        <button @click="clearFilter" class="btn-clear">Limpiar Filtro</button>
+      </div>
     </div>
-    <h1 class="text-center">Carreras</h1>
+    <h1 class="carreras-title">Carreras</h1>
     <div class="results">
       <div v-for="carrera in filteredCarreras" :key="carrera.id" class="card">
         <h2>{{ carrera.name }}</h2>
@@ -57,10 +59,9 @@
   </div>
 </template>
 
-  
 <script>
 import { ref, onMounted } from 'vue';
-import api from '../api.js';
+import { getCarreras } from '../api.js';
 
 export default {
   setup() {
@@ -96,15 +97,14 @@ export default {
       filteredCarreras.value = carreras.value;
     };
 
-    onMounted(() => {
-      api.get('/career')
-        .then(response => {
-          carreras.value = response.data.objectResponse;
-          filteredCarreras.value = response.data.objectResponse;
-        })
-        .catch(error => {
-          console.error('Error al obtener las carreras:', error);
-        });
+    onMounted(async () => {
+      try {
+        const carrerasResponse = await getCarreras();
+        carreras.value = carrerasResponse;
+        filteredCarreras.value = carrerasResponse;
+      } catch (error) {
+        console.error('Error al obtener las carreras:', error);
+      }
     });
 
     return { filters, filteredCarreras, applyFilter, clearFilter };
@@ -112,43 +112,97 @@ export default {
 };
 </script>
 
-  
 <style scoped>
 .carreras {
   padding: 20px;
+  background-color: #1b1343;
+  color: white;
 }
+
+.career-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: white;
+}
+
 .filters {
   margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
+
 .filters label {
   display: block;
   margin-bottom: 10px;
+  color: white; /* Color de texto para etiquetas */
 }
+
+.filters input,
+.filters select {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 90%;
+}
+
 .filters button {
-  margin-right: 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
+
+.button-group {
+  display: flex;
+  gap: 10px; /* Espacio entre los botones */
+}
+
+.btn-filter {
+  background-color: #2980b9;
+  color: white;
+}
+
+.btn-clear {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.carreras-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
 .results {
   display: flex;
   flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
-.text-center{
-  text-align: center;
-}
+
 .card {
-  background-color: #f4f4f4;
-  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: black;
+  border-radius: 8px;
   padding: 20px;
-  margin: 10px;
-  width: calc(33% - 40px);
+  width: calc(33% - 20px); /* Ajusta el ancho de la tarjeta */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 .card h2 {
-  margin: 0 0 10px;
+  font-size: 24px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
+
 .card p {
-  margin: 5px 0;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333; /* Color de texto para detalles */
 }
 </style>
-
-  
