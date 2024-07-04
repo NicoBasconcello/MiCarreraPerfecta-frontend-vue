@@ -22,7 +22,7 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Montserrat', sans-serif;
+  font-family: monospace, serif;
 }
 #app {
   height: 100%;

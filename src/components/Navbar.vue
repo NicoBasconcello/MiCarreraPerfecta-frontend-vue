@@ -12,23 +12,37 @@
     <div :class="['navbar-menu', { 'is-active': isActive }]">
       <router-link to="/">Inicio</router-link>
       <router-link to="/career">Carreras</router-link>
-      <router-link to="/login">Login</router-link>
+      <a @click="openLogin">Login</a>
     </div>
   </nav>
+  <Login :showLogin="showLogin" @close-login="closeLogin" />
 </template>
 
 <script>
 import { ref } from 'vue';
+import Login from './Login.vue';
 
 export default {
+  components: {
+    Login
+  },
   setup() {
     const isActive = ref(false);
+    const showLogin = ref(false);
 
     const toggleMenu = () => {
       isActive.value = !isActive.value;
     };
 
-    return { isActive, toggleMenu };
+    const openLogin = () => {
+      showLogin.value = true;
+    };
+
+    const closeLogin = () => {
+      showLogin.value = false;
+    };
+
+    return { isActive, toggleMenu, showLogin, openLogin, closeLogin };
   }
 };
 </script>

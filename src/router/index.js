@@ -11,6 +11,7 @@ const routes = [
   { path: '/test-intelligence', component: Cuestionario },
   { path: '/test', component: CuestionarioPreference },
   { path: '/results', component: TestResult }
+  
 ];
 
 const router = createRouter({

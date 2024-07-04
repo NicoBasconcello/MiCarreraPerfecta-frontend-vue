@@ -79,7 +79,7 @@ export default {
         const titleIntermediateMatch = filters.value.titleIntermediate === '' || carrera.title_intermediate.toString() === filters.value.titleIntermediate;
         const durationMonthsMatch = filters.value.durationMonths === '' || carrera.duration_months.toString() === filters.value.durationMonths;
         const idTypeCareerMatch = filters.value.idTypeCareer === '' || carrera.id_type_career.toString() === filters.value.idTypeCareer;
-        const modalityMatch = filters.value.modality === '' || carrera.modality.toString() === filters.value.modality;
+        const modalityMatch = filters.value.modality === '' || carrera.id_modality.toString() === filters.value.modality;
         return nameMatch && titleIntermediateMatch && durationMonthsMatch && idTypeCareerMatch && modalityMatch;
       });
     };
